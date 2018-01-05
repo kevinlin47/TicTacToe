@@ -15,10 +15,7 @@ public class TicTacToe {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Hello, my name is Kevin");
-        System.out.println("New commit");
-        System.out.println("Fork");
+        
     }
     
 }
