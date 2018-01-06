@@ -10,7 +10,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalButtonUI;
@@ -25,6 +28,9 @@ public class GameBoard implements ActionListener, Runnable{
     JPanel boardPanel;
     ArrayList<JButton> buttonList;
     Socket sock;
+    String player;
+    BufferedReader reader;
+    PrintWriter writer;
     
     
     public void setUpBoard()
@@ -60,7 +66,7 @@ public class GameBoard implements ActionListener, Runnable{
         tempButton.setForeground(Color.RED);
         tempButton.setBackground(Color.lightGray);
         tempButton.setOpaque(true);
-        tempButton.setText("X");
+        tempButton.setText(player);
         tempButton.setUI(new MetalButtonUI(){
             protected Color getDisabledTextColor()
             {
@@ -68,8 +74,10 @@ public class GameBoard implements ActionListener, Runnable{
             }
             
         });
+        Integer buttonNumber=buttonList.indexOf((JButton) ev.getSource());
+        writer.println(player+"-"+buttonNumber.toString());
+        writer.flush();
         tempButton.setEnabled(false);
-        checkWinCondition();
     }
     
     public boolean checkWinCondition()
@@ -156,10 +164,51 @@ public class GameBoard implements ActionListener, Runnable{
     {
         try{
             sock=new Socket("69.141.219.134",8080);
+            writer=new PrintWriter(sock.getOutputStream());
+            InputStreamReader isReader=new InputStreamReader(sock.getInputStream());
+            reader=new BufferedReader(isReader);
             System.out.println("Connection Established");
+            player=reader.readLine();
+            
+            Thread t=new Thread(new incommingReader());
+            t.start();
         }catch (IOException ex)
         {
             ex.printStackTrace();
+        }
+    }
+    
+    public class incommingReader implements Runnable
+    {   
+        public void run()
+        {
+            String move;
+            
+            try{
+            while((move=reader.readLine())!=null)
+            {   
+                String decode[]=move.split("-");
+                JButton tempButton=buttonList.get(Integer.parseInt(decode[1]));
+                tempButton.setFont(new Font("Courier New", Font.PLAIN,32));
+                tempButton.setForeground(Color.RED);
+                tempButton.setBackground(Color.lightGray);
+                tempButton.setOpaque(true);
+                tempButton.setText(decode[0]);
+                tempButton.setUI(new MetalButtonUI(){
+                protected Color getDisabledTextColor()
+                {
+                    return Color.RED;
+                }
+                });
+                
+                tempButton.setEnabled(false);
+                System.out.println(move);
+                checkWinCondition();
+            }
+            } catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
     
