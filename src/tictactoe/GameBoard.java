@@ -100,6 +100,7 @@ public class GameBoard implements ActionListener{
             displayWinner(buttonList.get(2).getText());
             return true;
         }
+        //(0,4,8) && (2,4,6)
         return false;
     }
     
