@@ -70,18 +70,14 @@ public class GameBoard implements ActionListener{
     
     public boolean checkWinCondition()
     {
-        if (buttonList.get(0).getText().equals(buttonList.get(1).getText()) && buttonList.get(0).getText().equals(buttonList.get(2).getText()) )
+        if (!buttonList.get(0).getText().equals("") && buttonList.get(0).getText().equals(buttonList.get(1).getText()) && buttonList.get(0).getText().equals(buttonList.get(2).getText()))
         {
-            JFrame endFrame=new JFrame("Game Over");
-            endFrame.setSize(150,200);
-            endFrame.setLocationRelativeTo(null);
-            endFrame.setVisible(true);
-            
-            JLabel jLabel=new JLabel("Player X Wins");
-            endFrame.getContentPane().add(BorderLayout.CENTER,jLabel);
-            JButton okButton=new JButton("Ok");
-            okButton.addActionListener(new EndGameListener(endFrame));
-            endFrame.getContentPane().add(BorderLayout.SOUTH,okButton);
+            displayWinner();
+            return true;
+        }
+        else if (!buttonList.get(3).getText().equals("") && buttonList.get(3).getText().equals(buttonList.get(4).getText()) && buttonList.get(3).getText().equals(buttonList.get(5).getText()))
+        {
+            displayWinner();
             return true;
         }
         return false;
@@ -101,6 +97,20 @@ public class GameBoard implements ActionListener{
             endGameFrame.dispose();
             mainFrame.dispose();
         }
+    }
+    
+    public void displayWinner()
+    {
+        JFrame endFrame=new JFrame("Game Over");
+        endFrame.setSize(150,200);
+        endFrame.setLocationRelativeTo(null);
+        endFrame.setVisible(true);
+            
+        JLabel jLabel=new JLabel("Player X Wins");
+        endFrame.getContentPane().add(BorderLayout.CENTER,jLabel);
+        JButton okButton=new JButton("Ok");
+        okButton.addActionListener(new EndGameListener(endFrame));
+        endFrame.getContentPane().add(BorderLayout.SOUTH,okButton);
     }
     
     public static void main(String args[])
