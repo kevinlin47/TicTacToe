@@ -85,6 +85,21 @@ public class GameBoard implements ActionListener{
             displayWinner(buttonList.get(6).getText());
             return true;
         }
+        else if(!buttonList.get(0).getText().equals("") && buttonList.get(0).getText().equals(buttonList.get(3).getText()) && buttonList.get(0).getText().equals(buttonList.get(6).getText()))
+        {
+            displayWinner(buttonList.get(0).getText());
+            return true;
+        }
+        else if(!buttonList.get(1).getText().equals("") && buttonList.get(1).getText().equals(buttonList.get(4).getText()) && buttonList.get(1).getText().equals(buttonList.get(7).getText()))
+        {
+            displayWinner(buttonList.get(1).getText());
+            return true;
+        }
+        else if(!buttonList.get(2).getText().equals("") && buttonList.get(2).getText().equals(buttonList.get(5).getText()) && buttonList.get(2).getText().equals(buttonList.get(8).getText()))
+        {
+            displayWinner(buttonList.get(2).getText());
+            return true;
+        }
         return false;
     }
     
