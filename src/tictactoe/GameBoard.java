@@ -23,7 +23,7 @@ import java.util.*;
  * @author kevinlin
  */
 
-public class GameBoard implements ActionListener, Runnable{
+public class GameBoard implements ActionListener{
     JFrame mainFrame;
     JPanel boardPanel;
     ArrayList<JButton> buttonList;
@@ -172,11 +172,6 @@ public class GameBoard implements ActionListener, Runnable{
         okButton.addActionListener(new EndGameListener(endFrame));
         endFrame.getContentPane().add(BorderLayout.SOUTH,okButton);
         endFrame.setVisible(true);
-    }
-    
-    public void run()
-    {
-        
     }
     
     public void setUpConnection()
