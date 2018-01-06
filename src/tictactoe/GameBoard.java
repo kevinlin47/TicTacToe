@@ -72,12 +72,17 @@ public class GameBoard implements ActionListener{
     {
         if (!buttonList.get(0).getText().equals("") && buttonList.get(0).getText().equals(buttonList.get(1).getText()) && buttonList.get(0).getText().equals(buttonList.get(2).getText()))
         {
-            displayWinner();
+            displayWinner(buttonList.get(0).getText());
             return true;
         }
         else if (!buttonList.get(3).getText().equals("") && buttonList.get(3).getText().equals(buttonList.get(4).getText()) && buttonList.get(3).getText().equals(buttonList.get(5).getText()))
         {
-            displayWinner();
+            displayWinner(buttonList.get(3).getText());
+            return true;
+        }
+        else if(!buttonList.get(6).getText().equals("") && buttonList.get(6).getText().equals(buttonList.get(7).getText()) && buttonList.get(6).getText().equals(buttonList.get(8).getText()))
+        {
+            displayWinner(buttonList.get(6).getText());
             return true;
         }
         return false;
@@ -99,14 +104,14 @@ public class GameBoard implements ActionListener{
         }
     }
     
-    public void displayWinner()
+    public void displayWinner(String winner)
     {
         JFrame endFrame=new JFrame("Game Over");
         endFrame.setSize(150,200);
         endFrame.setLocationRelativeTo(null);
         endFrame.setVisible(true);
             
-        JLabel jLabel=new JLabel("Player X Wins");
+        JLabel jLabel=new JLabel("Player "+winner+" wins!");
         endFrame.getContentPane().add(BorderLayout.CENTER,jLabel);
         JButton okButton=new JButton("Ok");
         okButton.addActionListener(new EndGameListener(endFrame));
