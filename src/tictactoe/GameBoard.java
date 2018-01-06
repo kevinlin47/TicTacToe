@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalButtonUI;
 import java.util.*;
@@ -18,10 +20,11 @@ import java.util.*;
  * @author kevinlin
  */
 
-public class GameBoard implements ActionListener{
+public class GameBoard implements ActionListener, Runnable{
     JFrame mainFrame;
     JPanel boardPanel;
     ArrayList<JButton> buttonList;
+    Socket sock;
     
     
     public void setUpBoard()
@@ -45,6 +48,7 @@ public class GameBoard implements ActionListener{
         }
         
         mainFrame.getContentPane().add(BorderLayout.CENTER,boardPanel);
+        setUpConnection();
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -100,7 +104,16 @@ public class GameBoard implements ActionListener{
             displayWinner(buttonList.get(2).getText());
             return true;
         }
-        //(0,4,8) && (2,4,6)
+        else if(!buttonList.get(0).getText().equals("") && buttonList.get(0).getText().equals(buttonList.get(4).getText()) && buttonList.get(0).getText().equals(buttonList.get(8).getText()))
+        {
+            displayWinner(buttonList.get(0).getText());
+            return true;
+        }
+        else if(!buttonList.get(2).getText().equals("") && buttonList.get(2).getText().equals(buttonList.get(4).getText()) && buttonList.get(2).getText().equals(buttonList.get(6).getText()))
+        {
+            displayWinner(buttonList.get(2).getText());
+            return true;
+        }
         return false;
     }
     
@@ -132,6 +145,22 @@ public class GameBoard implements ActionListener{
         JButton okButton=new JButton("Ok");
         okButton.addActionListener(new EndGameListener(endFrame));
         endFrame.getContentPane().add(BorderLayout.SOUTH,okButton);
+    }
+    
+    public void run()
+    {
+        
+    }
+    
+    public void setUpConnection()
+    {
+        try{
+            sock=new Socket("69.141.219.134",8080);
+            System.out.println("Connection Established");
+        }catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
     
     public static void main(String args[])

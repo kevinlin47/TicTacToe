@@ -5,6 +5,9 @@
  */
 package tictactoe;
 
+import java.util.TimerTask;
+import java.util.Timer;
+
 /**
  *
  * @author kevinlin
@@ -15,8 +18,18 @@ public class TicTacToe {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Timer t=new Timer();
+        t.schedule(new TimerTask(){
+            @Override
+            public void run()
+            {   
+                GameBoard gameBoard=new GameBoard();
+                gameBoard.setUpBoard();
+            }
+        }, 1000);
         
-        
+        GameServer server=new GameServer();
+        server.go();
 
     }
     
