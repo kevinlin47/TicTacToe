@@ -81,7 +81,8 @@ public class GameBoard implements ActionListener, Runnable{
     }
     
     public boolean checkWinCondition()
-    {
+    {   
+        
         if (!buttonList.get(0).getText().equals("") && buttonList.get(0).getText().equals(buttonList.get(1).getText()) && buttonList.get(0).getText().equals(buttonList.get(2).getText()))
         {
             displayWinner(buttonList.get(0).getText());
@@ -122,6 +123,16 @@ public class GameBoard implements ActionListener, Runnable{
             displayWinner(buttonList.get(2).getText());
             return true;
         }
+        
+        for (int i=0;i<buttonList.size();++i)
+        {
+            if (buttonList.get(i).isEnabled()==true)
+            {
+                return false;
+            }
+        }
+        
+        displayWinner("Draw");
         return false;
     }
     
@@ -146,13 +157,13 @@ public class GameBoard implements ActionListener, Runnable{
         JFrame endFrame=new JFrame("Game Over");
         endFrame.setSize(150,200);
         endFrame.setLocationRelativeTo(null);
-        endFrame.setVisible(true);
             
         JLabel jLabel=new JLabel("Player "+winner+" wins!");
         endFrame.getContentPane().add(BorderLayout.CENTER,jLabel);
         JButton okButton=new JButton("Ok");
         okButton.addActionListener(new EndGameListener(endFrame));
         endFrame.getContentPane().add(BorderLayout.SOUTH,okButton);
+        endFrame.setVisible(true);
     }
     
     public void run()
