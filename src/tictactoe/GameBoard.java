@@ -157,8 +157,16 @@ public class GameBoard implements ActionListener, Runnable{
         JFrame endFrame=new JFrame("Game Over");
         endFrame.setSize(150,200);
         endFrame.setLocationRelativeTo(null);
-            
-        JLabel jLabel=new JLabel("Player "+winner+" wins!");
+        JLabel jLabel;
+        
+        if (winner.equals("Draw"))
+        {
+            jLabel=new JLabel("Game is a "+winner);
+        }
+        else
+        {
+            jLabel=new JLabel("Player "+winner+" wins!");
+        }
         endFrame.getContentPane().add(BorderLayout.CENTER,jLabel);
         JButton okButton=new JButton("Ok");
         okButton.addActionListener(new EndGameListener(endFrame));
